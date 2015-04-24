@@ -1,0 +1,17 @@
+<ol data-template="true" id="item-list">
+    {{# console.log(model) }}
+    {{# _.each(model, function(item) { }}
+    <li>
+        <span class="obj-id">{{ item.objectId }}</span>
+        <label {{= item.done ? 'class="done"' : '' }}>
+        <!--todo use class done here-->
+        <input class="toggle" type="checkbox" {{= item.done ? 'checked="checked"' : '' }} />
+        {{= item.title }} -
+        {{= item.quantity }}
+        </label>
+
+        <a class="destroy">X</a>
+    </li>
+    {{# }) }}
+</ol>
+

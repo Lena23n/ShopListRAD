@@ -1,0 +1,156 @@
+body {
+	margin: 0;
+	background: rgb(84, 171, 200);
+	font-size: 16px;
+	line-height: 16px;
+	color: rgb(44, 76, 87);
+}
+
+div {
+	box-sizing: border-box;
+}
+
+h3 {
+	margin: 20px 0 20px;
+	line-height: 24px;
+	font-size: 24px;
+	text-align: center;
+	text-shadow: 0 1px 0 #CCEDFC;
+}
+
+#inner-wrap {
+	transition: all 0.25s;
+	width: 430px;
+	margin: 30px auto 0;
+	padding: 10px 20px 20px;
+	border-radius: 3px;
+	background: rgb(99, 195, 228);
+	border: 1px solid rgb(66, 117, 134);
+	box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+}
+
+input[type="text"] {
+	line-height: 16px;
+	padding: 6px 8px;
+	height: 24px;
+	border-radius: 3px;
+	border: 2px solid rgb(66, 117, 134);
+	outline: none;
+}
+
+#add {
+	transition: all 0.25s;
+	color: #ffffff;
+	font-size: 20px;
+	line-height: 20px;
+	width: 100px;
+	text-align: center;
+	height: 40px;
+	padding-top: 7px;
+	border-radius: 3px;
+	background: rgb(66, 117, 134);
+	border: 2px solid rgb(66, 117, 134);
+	float: right;
+	cursor: pointer;
+}
+
+#add:hover {
+	background: transparent;
+	text-shadow: 0 1px 0 rgba(0,0,0,0.5);
+}
+
+ol {
+	padding: 0 0 0 38px;
+	counter-reset: li;
+	list-style: none;
+	margin: 20px 0 0;
+}
+
+ol li label:before {
+	content: counter(li);
+	counter-increment: li;
+	position: absolute;
+	left: -40px;
+	padding: 2px 0;
+	width: 30px;
+	text-align: center;
+	top: 6px;
+	border-radius: 50%;
+	font-weight: bold;
+	color: rgb(66, 117, 134);
+	text-shadow: 0 1px 0 #CCEDFC;
+	border: 2px solid #fff;
+}
+
+
+li {
+	transition: all 0.25s;
+	border-bottom: 1px solid rgb(66, 117, 134);
+	margin-right: 24px;
+	font-weight: bold;
+	text-shadow: 0 1px 0 #9fb8c6;
+	color: rgb(66, 117, 134);
+}
+
+li:hover {
+	text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+	color: #fff;
+}
+
+li label:hover:before {
+	text-shadow: 0 1px 0 rgba(0,0,0,0.6);
+	color: #fff;
+}
+
+
+li label {
+	cursor: pointer;
+	display: inline-block;
+	padding: 10px 0;
+	vertical-align: top;
+	position: relative;
+}
+
+.toggle {
+	display: none;
+}
+
+li label.done {
+	text-decoration: line-through;
+}
+
+li label.done:before {
+	border: 2px solid transparent;
+}
+
+
+#new-item {
+	width: 166px;
+}
+
+#count {
+	width: 56px;
+	margin-left: 10px;
+}
+
+.destroy {
+	transition: all 0.25s;
+	float: right;
+	cursor: pointer;
+	padding-top: 10px;
+}
+
+.destroy:hover {
+	color: #ffffff;
+}
+
+.obj-id {
+	display: none;
+}
+#form > .backbone-view {
+	position: static;
+}
+
+#item-list-block > .backbone-view {
+	position: static;
+}
