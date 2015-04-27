@@ -10,8 +10,9 @@ Parse.initialize("YZp2Tqvez72boawZIl1Q6imzyfJvytJuvtmzrvz7", "UvDJCduCQ8b5NSpnBI
         "source/models/group.js",
         "source/views/auth/auth.js",
         "source/views/inner/parent_widget/parent_widget.js",
-        "source/views/inner/list/form.js",
-        "source/views/inner/list/list.js"
+        "source/views/inner/form/form.js",
+        "source/views/inner/list/list.js",
+        "source/views/toast/toast.js"
     ];
 
     function onEndLoad() {
@@ -20,7 +21,6 @@ Parse.initialize("YZp2Tqvez72boawZIl1Q6imzyfJvytJuvtmzrvz7", "UvDJCduCQ8b5NSpnBI
             application = window.RAD.application,
             coreOptions = {
                 defaultBackstack: false,
-                //backstackType: "native",
                 defaultAnimation: 'slide',
                 animationTimeout: 3000,
                 debug: false

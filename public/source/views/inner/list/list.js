@@ -4,39 +4,14 @@ RAD.view("view.inner_list", RAD.Blanks.View.extend({
         "click .toggle": "toggleDone",
         "click a.destroy": "clear"
     },
-    //model : RAD.model('itemCollection'),
 
     onInitialize : function () {
+        'use strict';
         this.changeModel(RAD.model('itemCollection'));
     },
 
-    //initialize: function () {
-    //    this.listenTo(this.model, 'all', this.render);
-    //},
-
-    //render: function () {
-    //    if (!this.template) {
-    //        return false;
-    //    }
-    //
-    //    var data = null;
-    //
-    //    if (this.model) {
-    //        data = this.model.toJSON();
-    //    }
-    //    var html = this.template({model: data});
-    //
-    //    this.$el.html(html);
-    //
-    //    console.log('List render');
-    //    return this;
-    //},
-    //onInitialize: function () {
-    //    this.model = RAD.model('itemCollection');
-    //    console.log('list-view',this.model);
-    //},
-
     toggleDone: function(e) {
+        'use strict';
         var idx, modelToToggle;
 
         idx = $(e.currentTarget).closest('li').index();
@@ -50,6 +25,7 @@ RAD.view("view.inner_list", RAD.Blanks.View.extend({
 
 
     clear: function(e) {
+        'use strict';
         var idx, modelToDestroy;
 
         idx = $(e.currentTarget).closest('li').index();

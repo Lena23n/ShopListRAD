@@ -1,53 +1,56 @@
 RAD.view("view.inner_form", RAD.Blanks.View.extend({
-    url: 'source/views/inner/list/from.html',
+    url: 'source/views/inner/form/from.html',
     events: {
         "click #add": "createOnClickAddButton",
         "click #logout": "logout"
     },
-    //model: RAD.model("itemCollection"),
     inputs: {
         name: null,
         quantity: null
     },
-    onInitialize : function () {
+    onInitialize: function () {
+        'use strict';
         this.changeModel(RAD.model('itemCollection'));
     },
     createOnClickAddButton: function () {
+        'use strict';
         this.inputs.name = $("#new-item");
         this.inputs.quantity = $("#count");
 
-        var name = this.inputs.name.val(),
+        var self = this,
+            name = this.inputs.name.val(),
             quantity = this.inputs.quantity.val(),
             currentUser = Parse.User.current(),
             newACL,
-            group = currentUser.get('group'),
+            group = null,
             item;
 
         if (!name || !quantity) {
-            alert('You should fill in all the fields');
+            this.application.showError('You should fill in all the fields');
             return false;
         }
-            newACL = new Parse.ACL();
 
-            newACL.setPublicReadAccess(true);
-            newACL.setPublicWriteAccess(true);
+        group = currentUser.get('group');
+        newACL = new Parse.ACL();
 
-            item = {
-                title: name,
-                quantity: quantity,
-                group: group
-            };
+        newACL.setPublicReadAccess(true);
+        newACL.setPublicWriteAccess(true);
 
-            var data = _.extend({
-                ACL: newACL
-            }, item);
+        item = {
+            title: name,
+            quantity: quantity,
+            group: group
+        };
 
-            console.log('save item');
+        var data = _.extend({
+            ACL: newACL
+        }, item);
+
+        console.log('save item');
 
         this.model.create(data, {
-            validate: true,
             error: function (model, error) {
-                self.showError(error)
+                self.application.showError(error)
             }
         });
 
@@ -57,6 +60,7 @@ RAD.view("view.inner_form", RAD.Blanks.View.extend({
     },
 
     logout: function () {
+        'use strict';
         Parse.User.logOut();
         this.application.showAuthView();
     }

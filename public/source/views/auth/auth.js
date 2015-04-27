@@ -5,40 +5,45 @@ RAD.view("view.auth", RAD.Blanks.View.extend({
         "click #signUp": "signUp"
     },
     login: function () {
-        var login = this.$el.find('#login').val(),
-            pass = this.$el.find('#password').val(),
+        'use strict';
+        var login = this.$el.find('#login'),
+            pass = this.$el.find('#password'),
             data = {
-                login: login,
-                pass: pass,
-                self: this
+                login: login.val(),
+                pass: pass.val()
             };
 
-        this.application.login(data);
+        this.application.login(data).then(function () {
+            login.val('');
+            pass.val('');
+        });
     },
     signUp: function () {
-        var login = this.$el.find('#newLogin').val(),
-            pass = this.$el.find('#newPassword').val(),
-            mail = this.$el.find('#mail').val(),
-            groupName = this.$el.find('#role').val(),
+        'use strict';
+        var login = this.$el.find('#newLogin'),
+            pass = this.$el.find('#newPassword'),
+            mail = this.$el.find('#mail'),
+            groupName = this.$el.find('#role'),
             data = {},
-            isFieldFilled = !login.length || !pass.length || !mail.length || !groupName.length;
+            isFieldFilled = !login.val() || !pass.val() || !mail.val() || !groupName.val();
 
         if (isFieldFilled) {
-            this.showError('verify your credentials, please');
+            this.application.showError('You should fill in all the fields');
             return false;
         }
 
         data = {
-            username: login,
-            password: pass,
-            email: mail,
-            groupName: groupName,
-            self: this
+            username: login.val(),
+            password: pass.val(),
+            email: mail.val(),
+            groupName: groupName.val()
         };
 
-        this.application.signUp(data);
-    },
-    showError: function (error) {
-        alert(error);
+        this.application.signUp(data).then(function () {
+            login.val('');
+            pass.val('');
+            mail.val('');
+            groupName.val('');
+        });
     }
 }));

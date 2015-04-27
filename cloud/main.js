@@ -1,10 +1,3 @@
-// Use Parse.Cloud.define to define as many cloud functions as you want.
-// For example:
-Parse.Cloud.define("hello", function (request, response) {
-    response.success("Hello world!");
-});
-
-
 Parse.Cloud.afterSave("Item", function (request) {
     var itemName = request.object.get("title"),
         itemQuantity = request.object.get("quantity"),
@@ -83,9 +76,9 @@ Parse.Cloud.define("sendMail", function (request, response) {
     Mandrill.sendEmail({
         message: {
             text: text,
-            subject: "Check new Item in you List",
+            subject: "Your shopping list was updated",
             from_email: "parse@cloudcode.com",
-            from_name: "Lena23n",
+            from_name: "admin",
             to: userCredentials
         },
         async: true

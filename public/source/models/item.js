@@ -1,4 +1,4 @@
-RAD.model('itemModel', Parse.Object.extend('Item',{
+RAD.model('itemModel', Parse.Object.extend('Item', {
     defaults: {
         title: 'Title...',
         quantity: '',
@@ -6,7 +6,7 @@ RAD.model('itemModel', Parse.Object.extend('Item',{
         group: ''
     },
 
-    toggle: function() {
+    toggle: function () {
         this.set({done: !this.get("done")});
         this.save();
     }
@@ -15,14 +15,16 @@ RAD.model('itemModel', Parse.Object.extend('Item',{
 
 RAD.model('itemCollection', Parse.Collection.extend({
     model: RAD.model('itemModel'),
-    query : new Parse.Query(RAD.model('itemModel')),
-    fetchItems : function () {
-        /*this.clear();*/
+    query: new Parse.Query(RAD.model('itemModel')),
+    fetchItems: function () {
         var currentUser = Parse.User.current(),
-            group = currentUser.get('group');
+            group = null;
 
-            this.query.equalTo('group', group);
-            this.fetch().then(function () {
+        group = currentUser.get('group');
+
+        this.query.equalTo('group', group);
+
+        this.fetch().then(function () {
             RAD.application.showLogInView();
         });
     }

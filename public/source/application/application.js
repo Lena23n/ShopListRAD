@@ -13,27 +13,28 @@ RAD.application(function (core) {
     };
 
     app.login = function (data) {
-        var self = data.self;
+        'use strict';
 
-        Parse.User.logIn(data.login, data.pass, {
+        return Parse.User.logIn(data.login, data.pass, {
             success: function (user) {
                 RAD.model('itemCollection').fetchItems();
             },
             error: function (user, error) {
-                self.showError(error.message);
+                app.showError(error.message);
             }
         });
     };
 
     app.signUp = function (data) {
-        var self =  data.self,
+        'use strict';
+        var self = data.self,
             user = new Parse.User();
 
         user.set("username", data.username);
         user.set("password", data.password);
         user.set("email", data.email);
 
-        user.signUp(null, {
+        return user.signUp (null, {
             success: function (user) {
                 var query = new Parse.Query("Group");
                 query.equalTo('name', data.groupName);
@@ -41,47 +42,44 @@ RAD.application(function (core) {
                 query.find()
                     .then(function (groups) {
                         if (groups.length > 0) {
+                            // Add to group
                             var currentGroup = groups[0];
 
                             var relation = currentGroup.relation("Users");
                             relation.add(user);
-                            currentGroup.save();
-
-                            console.log(currentGroup, 'add to group');
-                            user.set("group", currentGroup);
-                            return user.save();
-                        } else {
-                            var groupList  = new RAD.models.groupItem();
-                            groupList.set({name: data.groupName});
-                            groupList.save()
-                                .then(function (group) {
-                                    console.log(group);
-                                    var relation = group.relation("Users");
-                                    relation.add(user);
-                                    group.save();
-
-                                    user.set('group', group);
+                            currentGroup.save()
+                                .then(function () {
+                                    console.log(currentGroup, 'add to group');
+                                    user.set("group", currentGroup);
                                     return user.save();
+                                }).then(function () {
+                                    RAD.model('itemCollection').fetchItems();
                                 });
+                        } else {
+                            // Create new group
+                            var groupList = new RAD.models.groupItem();
+                            groupList.set({name: data.groupName});
+                            groupList.save().then(function (group) {
+                                var relation = group.relation("Users");
+                                relation.add(user);
+                                return group.save();
+                            }).then(function (group) {
+                                user.set('group', group);
+                                return user.save();
+                            }).then(function () {
+                                RAD.model('itemCollection').fetchItems();
+                            });
                         }
-
-                    }).then(function () {
-                        RAD.model('itemCollection').fetchItems();
-
-                       //self.showLogInView(user);
                     });
             },
             error: function (user, error) {
-                self.showError(error.code + " " + error.message);
+                app.showError(error.message);
             }
         });
     };
 
-    //app.fetchItems = function (user) {
-    //    RAD.model('ItemCollection').fetchItems(user);
-    //};
-
     app.showLogInView = function () {
+        'use strict';
         console.log('log in view');
         var options = {
             container_id: '#application',
@@ -101,6 +99,22 @@ RAD.application(function (core) {
         });
     };
 
+    app.showError = function (error) {
+        "use strict";
+        var msg = error,
+            gravity = 'top';
+
+        // show toast
+        core.publish('navigation.toast.show', {
+            content: "view.toast",
+            showTime: 6000,
+            gravity: gravity,
+            outsideClose: true,
+            extras: {
+                msg: msg
+            }
+        });
+    };
 
     return app;
 }, true);
